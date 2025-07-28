@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dhyaneshvar K - AI/ML Portfolio</title>
+    <title>Dhyaneshvar K - Portfolio</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.net.min.js"></script>
+
     <style>
         :root {
             --neon-blue: #00f7ff;
@@ -108,16 +110,21 @@
             left: 0;
             width: 100%;
             padding: 1rem;
-            background: rgba(0, 4, 40, 0.9);
+            background: rgba(0, 2, 19, 0.931);
             backdrop-filter: blur(10px);
             z-index: 1000;
+            transition: top 0.3s ease-in-out;
+        }
+
+        nav.hidden {
+        top: -200px; /* something larger than nav height */
         }
 
         nav ul {
             list-style: none;
             display: flex;
             justify-content: center;
-            gap: 3rem;
+            gap: 5rem;
         }
 
         nav a {
@@ -174,22 +181,78 @@
             text-shadow: 0 0 10px var(--neon-blue);
         }
 
+        h3 {
+            font-size: 1.8rem;               /* smaller than h2 */
+            color: var(--neon-blue);         /* same color */
+            text-shadow: 0 0 8px var(--neon-blue); /* subtle glow */
+            margin-bottom: 1rem;             /* some spacing */
+        }
+
+        p {
+            font-size: larger;
+        }
+
         .projects {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
         }
 
+        .glass-card {
+            background: rgba(16, 16, 32, 0.5);
+            border: 1px solid rgba(0, 247, 255, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.2);
+        }
+
+
         .project-card {
             background: var(--card-bg);
             border: 1px solid rgba(0, 247, 255, 0.2);
             border-radius: 15px;
             padding: 2rem;
-            transition: all 0.3s;
+            transition: all 0.2 ease;
             position: relative;
             overflow: hidden;
             backdrop-filter: blur(10px);
+            margin-bottom:25px;
         }
+
+        .project-img {
+            display: flex;
+            align-items: center;  /* align text & image vertically */
+            gap: 2rem;            /* space between text and image */
+            flex-wrap: wrap;      /* stack on small screens */
+        }
+
+        .project-img img {
+            width: 250px;          /* desktop default */
+            max-width: 100%;       /* never overflow container */
+            height: auto;          /* keep aspect ratio */
+            border-radius: 6px;    /* consistent with your style */
+            flex-shrink: 0;        /* don’t shrink image */
+        }
+
+        .project-img > div {
+            flex: 1;               /* text takes remaining space */
+            min-width: 200px;      /* prevent too narrow on wrap */
+        }
+
+        @media (max-width: 768px) {
+            .project-img {
+                flex-direction: column;   /* stack vertically */
+                align-items: flex-start;  /* text above image */
+            }
+
+            .project-img img {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+    
 
         .project-card::before {
             content: '';
@@ -200,7 +263,7 @@
             height: 100%;
             background: linear-gradient(45deg, transparent, rgba(0, 247, 255, 0.1));
             opacity: 0;
-            transition: opacity 0.3s;
+            transition: opacity 0.3s ease;
         }
 
         .project-card:hover {
@@ -286,6 +349,50 @@
             letter-spacing: 2px;
         }
 
+        /* Hidden state */
+        .fade-slide {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 1s ease-out;
+            visibility: hidden;
+        }
+
+        /* Visible state when in view */
+        .fade-slide.in-view {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+
+        /* Staggered slide from left/right */
+        .slide-left { transform: translateX(-100px); }
+        .slide-right { transform: translateX(100px); }
+
+        .fade-slide.in-view.slide-left,
+        .fade-slide.in-view.slide-right {
+            transform: translateX(0);
+        }
+
+        /* Hover glow pop effect */
+        .project-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 0 30px rgba(0,247,255,0.8);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(100px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            visibility: hidden;
+        }
+
+        /* Visible state */
+        .reveal.in-view {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+
         @keyframes typing {
             from { width: 0 }
             to { width: 100% }
@@ -313,6 +420,62 @@
         }
     </style>
 </head>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('.fade-slide');
+    const observer = new IntersectionObserver(
+        entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            } else {
+            entry.target.classList.remove('in-view');
+            }
+        });
+        },
+        { threshold: 0.2 }
+    );
+    cards.forEach(card => observer.observe(card));
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const elems = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver(
+        entries => {
+            entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+            } else {
+                entry.target.classList.remove('in-view');
+            }
+            });
+        },
+        { threshold: 0.2 }
+        );
+        elems.forEach(el => observer.observe(el));
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        let lastScroll = window.pageYOffset || document.documentElement.scrollTop;
+        const nav = document.querySelector('nav');
+
+        window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+        if (currentScroll > lastScroll) {
+            // scrolled down
+            nav.classList.add('hidden');
+        } else {
+            // scrolled up
+            nav.classList.remove('hidden');
+        }
+
+        lastScroll = currentScroll <= 0 ? 0 : currentScroll;
+        }, { passive: true });
+    });
+</script>
 <body>
     <div id="particles-js"></div>
     <div class="content">
@@ -332,20 +495,22 @@
                     <img src="pic.jpg" alt="Your Profile Picture" class="profile-img">
                 </div>
                 <h1 class="typing">Dhyaneshvar K</h1>
-                <p>AI/ML Enthusiast | Data Scientist</p>
+                <p style="font-size:larger;">AIML and Data Science Enthusiast</p>
             </div>
         </header>
 
         <section id="about">
-            <div class="container">
+            <div class="container reveal">
+                <div class="glass-card">
                 <h2>About Me</h2>
-                <p>I am a second-year student pursuing BTech in Computer Science at IIITS, proficient in Python and it's libraries (Pandas, Numpy, Scikit-Learn, Matplotlib, Seaborn) for data analysis and machine learning. I also have experience in MySQL, utilizing it for database management and querying.
-                    <br></br>
-                    Passionate about Artificial Intelligence and Machine Learning, with a focus on NLP and Speech Processing. Currently expanding my skill set with Web development, aiming to integrate AI/ML solutions into practical applications, 
-                    also working on a project that uses LangChain and Llama2 chat model.
-                    <br></br>
+                <p style="font-size: large;">I am a 3rd year BTech student in Computer Science at IIIT Sri City, with a strong proficiency in Python and its libraries for data analysis, machine learning, deep learning, computer vision and natural lanuage processing. Passionate about Artificial Intelligence, I focus primarily on Natural Language Processing (NLP), Large Language Models (LLMs) and Reinforcement Learning (RL). 
+                <br>
+                Currently, I am expanding my expertise in LLMs and enhancing my skills in web development, model integration with applications, and model deployment.
+                <br>
                     AIML & DS Core Member at Google Developer Groups IIIT SriCity for the academic year 2024-25.
                 </p>
+                <br>
+                </div>
             </div>
         </section>
 
@@ -353,9 +518,85 @@
             <div class="container">
                 <h2>Projects</h2>
                 <div class="projects">
-                    <div class="project-card">
-                        <h3>Bangalore Housing Price Prediction</h3>
-                        <p>A Machine Learning model that takes in various parameters of a house in bangalore including the area in SQFT, BHK, Bedrooms, Location and gives the predicted value. Web application interface made using HTML, CSS and JavaScript with a Flask server</p>
+                    <div class="project-card fade-slide slide-left">
+                        <div class="project-img">
+                            <div>                        
+                                <h3>Flappy Bird PPO and A2C Agents</h3>
+                                <br>
+                                <p>A Reinforcement Learning (RL) agent that learns to play Flappy Bird using Stable Baselines3 and a custom OpenAI Gym environment.
+
+                                This project demonstrates deep RL for an arcade-style game, with PPO/A2C and entropy annealing for improved exploration.</p>
+                            </div>
+                            <img src="flappy.png" style="width: 250px; height:250px; border-radius: 6px;"></img>
+                        </div>
+                        <div class="skills">
+                            <span class="skill-tag">RL</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">CNN</span>
+                            <span class="skill-tag">PPO</span>
+                            <span class="skill-tag">A2C</span>
+                            <span class="skill-tag">OpenCV</span>
+                            <span class="skill-tag">Numpy</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="projects">
+                    <div class="project-card fade-slide slide-right">
+                        <div class="project-img">
+                            <div>                        
+                                <h3>Xview2 Damage Assesment using Siamese UNet</h3>
+                                <br>
+                            <p>A Siamese Unet trained on Xview2 dataset that uses a Resnet34 encoder to process pre and post disaster images to segment buildings and classify damage pixelwise (5 classes).
+
+                            FastAPI Backend for inference and Docker ready backend
+                            </p>
+                            </div>
+                            <img src="xview2.png" style="width: 250px; height:250px; border-radius: 6px;"></img>
+                        </div>
+                        <div class="skills">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">FastAPI</span>
+                            <span class="skill-tag">PyTorch</span>
+                            <span class="skill-tag">OpenCV</span>
+                            <span class="skill-tag">Matplotlib</span>
+                            <span class="skill-tag">Numpy</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="projects">
+                    <div class="project-card fade-slide slide-left">
+                        <div class="project-img">
+                            <div>                        
+                                <h3>Jarvis - Local personal Multimodal chatbot</h3>
+                                <br>
+                                <p>A personal RAG based chatbot that uses llama-3.1-8B-instrcut-Q4 model as its llm, llama-3-vision-alpha-mmproj as Vision connector and ChromaDB + ElasticSearch to store and repond to the user on their day to day queries. Intelligent session management with smart information retention across sessions with hybrid retrieval </p>
+                            </div>
+                            <img src="Jarvis.jpg" style="width: 250px; height:250px; border-radius: 6px;"></img>
+                        </div>
+                        <div class="skills">
+                            <span class="skill-tag">LlamaCppPython</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">ChromaDB</span>
+                            <span class="skill-tag">RAG</span>
+                            <span class="skill-tag">LLM</span>
+                            <span class="skill-tag">VLM</span>
+                            <span class="skill-tag">SQLite</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="projects">
+                    <div class="project-card fade-slide slide-right">
+                        <div class="project-img">
+                            <div>                        
+                                <h3>Bangalore House Price Prediction</h3>
+                                <br>
+                                <p>A Machine Learning model that takes in various parameters of a house in bangalore including the area in SQFT, BHK, Bedrooms, Location and gives the predicted value. Web application interface made using HTML, CSS and JavaScript with a Flask server and containerized with Docker to be hosted on Render.</p>
+                            </div>
+                            <img src="BHP.png" style="width: 250px; height:250px; border-radius: 6px;"></img>
+                        </div>
                         <div class="skills">
                             <span class="skill-tag">Scikit-Learn</span>
                             <span class="skill-tag">Python</span>
@@ -364,14 +605,53 @@
                             <span class="skill-tag">JavaScript</span>
                             <span class="skill-tag">Flask</span>
                             <span class="skill-tag">Matplotlib</span>
+                            <span class="skill-tag">Docker</span>
+                            <span class="skill-tag">Pandas</span>
                         </div>
                     </div>
-                    <div class="project-card">
-                        <h3>ChatBot For An ERP System</h3>
-                        <p>Developed a CHATBOT for an erp system, that explains the functionalities in the website to new users, using RASA which uses some NLP techniques to classify user messages into different intents and takes decisions based on it</p>
+                </div>
+
+                <div class="projects">
+                    <div class="project-card fade-slide slide-left">
+                        <div class="project-img">
+                            <div>                        
+                                <h3>PetVerse - Website for pets</h3>
+                                <br></br>
+                                <p>A everything for pets website using HTML, CSS and JS for front-end. NodeJS and Express for backend and MongoDB for persistent storage.</p>
+                            </div>
+                            <img src="petverse.png" style="width: 250px; height:250px; border-radius: 6px;"></img>
+                        </div>
+                        <div class="skills">
+                            <span class="skill-tag">HTML</span>
+                            <span class="skill-tag">CSS</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">NodeJS</span>
+                            <span class="skill-tag">Express</span>
+                            <span class="skill-tag">MongoDB</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="projects">
+                    <div class="project-card fade-slide slide-right">
+                        <div class="project-img">
+                            <div>                        
+                                <h3>AgriIntel - Website for farmers</h3>
+                                <br></br>
+                                <p>A website for helping Farmers. Crop recommendation based on the soil and climatic conditions. Weather forecast for the farm. Disease detection mobilenet model. Expected yield and returns and land management.</p>
+                            </div>
+                            <img src="Agri.png" style="width: 250px; height:250px; border-radius: 6px;"></img>
+                        </div>
                         <div class="skills">
                             <span class="skill-tag">Python</span>
-                            <span class="skill-tag">RASA</span>
+                            <span class="skill-tag">Tensorflow</span>
+                            <span class="skill-tag">Scikit-Learn</span>
+                            <span class="skill-tag">Streamlit</span>
+                            <span class="skill-tag">Pandas</span>
+                            <span class="skill-tag">Prophet</span>
+                            <span class="skill-tag">Xgboost</span>
+                            <span class="skill-tag">Matplotlib</span>
+                            <span class="skill-tag">Seaborn</span>
                         </div>
                     </div>
                 </div>
@@ -379,26 +659,58 @@
         </section>
 
         <section id="skills">
-            <div class="container">
+            <div class="container reveal">
+                <div class="glass-card">
                 <h2>Skills</h2>
                 <div class="skills">
                     <span class="skill-tag">Python</span>
                     <span class="skill-tag">TensorFlow</span>
+                    <span class="skill-tag">PyTorch</span>
                     <span class="skill-tag">Scikit-Learn</span>
-                    <span class="skill-tag">Machine Learning</span>
-                    <span class="skill-tag">Deep Learning</span>
+                    <span class="skill-tag">FastAPI</span>
                     <span class="skill-tag">HTML</span>
                     <span class="skill-tag">CSS</span>
-                    <span class="skill-tag">NLP</span>
-                    <span class="skill-tag">Data Analysis</span>
                     <span class="skill-tag">MySQL</span>
                     <span class="skill-tag">Seaborn</span>
-                    <span class="skill-tag">Java</span>
                     <span class="skill-tag">Streamlit</span>
-                    <span class="skill-tag">C</span>
                     <span class="skill-tag">Pandas</span>
                     <span class="skill-tag">Langchain</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">MongoDB</span>
+                    <span class="skill-tag">NodeJS</span>
+                    <span class="skill-tag">OpenCV</span>
+                    <span class="skill-tag">Machine Learning</span>
+                    <span class="skill-tag">Deep Learning</span>
+                    <span class="skill-tag">Reinforcement Learning</span>
+                    <span class="skill-tag">Natural Language Processing</span>
+                    <span class="skill-tag">Computer Vision</span>
+                    <span class="skill-tag">LLMs</span>
+                    <span class="skill-tag">Exploratory Data Analysis</span>
                 </div>
+                <br>
+                </div>  
+            </div>
+        </section>
+        <section id="certifications">
+            <div class="container reveal" style="margin-top: -40px">
+                <div class="glass-card">
+                    <h2>Certifications</h2>
+                <div style="margin-left: 30px">
+                    <li>
+                        <div>
+                            <h3>&nbspSupervised Machine Learning: Regression and Classification</h3>
+                            <p>&nbsp&nbspDeepLearning.AI, Coursera 2024</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <h3 style="margin-top:10px">&nbspUnsupervised Learning, Recommenders, Reinforcement Learning</h3>
+                            <p>&nbsp&nbspDeepLearning.AI, Coursera 2025</p>
+                        </div>
+                    </li>
+                    
+                </div>
+                </div>  
             </div>
         </section>
 
@@ -416,64 +728,22 @@
     </div>
 
     <script>
-        particlesJS('particles-js',
-            {
-            "particles": {
-                "number": {
-                "value": 80,
-                "density": {
-                    "enable": true,
-                    "value_area": 800
-                }
-                },
-                "color": {
-                "value": "#00f7ff"
-                },
-                "shape": {
-                "type": "circle"
-                },
-                "opacity": {
-                "value": 0.5,
-                "random": false
-                },
-                "size": {
-                "value": 3,
-                "random": true
-                },
-                "line_linked": {
-                "enable": true,
-                "distance": 150,
-                "color": "#00f7ff",
-                "opacity": 0.4,
-                "width": 1
-                },
-                "move": {
-                "enable": true,
-                "speed": 2,
-                "direction": "none",
-                "random": false,
-                "straight": false,
-                "out_mode": "out",
-                "bounce": false
-                }
-            },
-            "interactivity": {
-                "detect_on": "canvas",
-                "events": {
-                "onhover": {
-                    "enable": true,
-                    "mode": "repulse"
-                },
-                "onclick": {
-                    "enable": true,
-                    "mode": "push"
-                },
-                "resize": true
-                }
-            },
-            "retina_detect": true
-            }
-        );
+            VANTA.NET({
+                el: "#particles-js",
+                mouseControls: true,
+                touchControls: true,
+                minHeight: 200.00,
+                minWidth: 200.00,
+                scale: 1.00,
+                scaleMobile: 1.00,
+                color: 0x00f7ff,
+                backgroundColor: 0x000328,
+                points: 15.00,         
+                maxDistance: 20.00,    
+                spacing: 17.00        
+                })
+    </script>
+
     </script>
 </body>
 </html>
