@@ -53,19 +53,20 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         { passive: true }
     );
-});
 
-VANTA.NET({
-                el: "#particles-js",
-                mouseControls: true,
-                touchControls: true,
-                minHeight: 200.00,
-                minWidth: 200.00,
-                scale: 1.00,
-                scaleMobile: 1.00,
-                color: 0x00f7ff,
-                backgroundColor: 0x000328,
-                points: 15.00,         
-                maxDistance: 20.00,    
-                spacing: 17.00        
-                })
+    // ✅ Initialize VANTA.NET *after* DOM is ready
+    VANTA.NET({
+        el: "#particles-js",
+        mouseControls: true,
+        touchControls: true,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        scale: 1.00,
+        scaleMobile: 1.00,
+        color: 0x00f7ff,
+        backgroundColor: 0x000328,
+        points: 15.00,
+        maxDistance: 20.00,
+        spacing: 17.00
+    });
+});
