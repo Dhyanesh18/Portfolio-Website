@@ -62,8 +62,6 @@ document.addEventListener('DOMContentLoaded', () => {
         navLinks.classList.toggle("show");
     });
 
-
-    // ✅ Initialize VANTA.NET *after* DOM is ready
     VANTA.NET({
         el: "#particles-js",
         mouseControls: true,
