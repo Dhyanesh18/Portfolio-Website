@@ -54,6 +54,15 @@ document.addEventListener('DOMContentLoaded', () => {
         { passive: true }
     );
 
+        // Mobile menu toggle
+    const menuToggle = document.getElementById("menu-toggle");
+    const navLinks = document.getElementById("nav-links");
+
+    menuToggle.addEventListener("click", () => {
+        navLinks.classList.toggle("show");
+    });
+
+
     // ✅ Initialize VANTA.NET *after* DOM is ready
     VANTA.NET({
         el: "#particles-js",
