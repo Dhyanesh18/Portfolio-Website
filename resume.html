@@ -8,17 +8,21 @@
     </head>
     <body>
     <div id="particles-js"></div>
-    <div class="content">
-        <nav>
-        <ul>
-            <li><a href="index.html#about">About</a></li>
-            <li><a href="index.html#projects">Projects</a></li>
-            <li><a href="index.html#skills">Skills</a></li>
-            <li><a href="index.html#contact">Contact</a></li>
-            <li><a href="index.html">Home</a></li> 
-        </ul>
+    <nav>
+            <div class="nav-container">
+                <button class="menu-toggle" id="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul id="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="index.html">Home</a></li>
+                </ul>
+            </div>
         </nav>
-
+    <div class="content">
         <section id="resume">
         <div class="container reveal">
             <div class="glass-card">
@@ -26,7 +30,7 @@
             <p>You can view/download my resume below:</p>
             <br>
             <!-- Embed Resume PDF -->
-        <iframe src="Dhyaneshvar_K_resume.pdf" width="100%" height="1200px" style="border: none; border-radius: 8px;"></iframe>
+        <iframe id="pdf" src="Dhyaneshvar_K_resume.pdf" width="100%" height="1200px" style="border: none; border-radius: 8px;"></iframe>
             <br><br>
             <!-- Direct Download -->
             <div style="text-align: center; margin-top: 20px;">

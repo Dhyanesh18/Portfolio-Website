@@ -532,6 +532,11 @@ p {
         font-size: 0.7rem;
         padding: 0.3rem 0.8rem;
     }
+
+    #pdf{
+        height: 360px;
+    }    
+
 }
 /* Nav container */
 /* Nav container */
