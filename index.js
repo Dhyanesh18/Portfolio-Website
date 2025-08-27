@@ -1,79 +1,62 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Fade-slide animation
     const cards = document.querySelectorAll('.fade-slide');
-    const cardObserver = new IntersectionObserver(
-        entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('in-view');
-                } else {
-                    entry.target.classList.remove('in-view');
-                }
-            });
-        },
-        { threshold: 0.08 }
-    );
+    const cardObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            entry.isIntersecting
+                ? entry.target.classList.add('in-view')
+                : entry.target.classList.remove('in-view');
+        });
+    }, { threshold: 0.08 });
     cards.forEach(card => cardObserver.observe(card));
 
     // Reveal animation
     const elems = document.querySelectorAll('.reveal');
-    const revealObserver = new IntersectionObserver(
-        entries => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('in-view');
-                } else {
-                    entry.target.classList.remove('in-view');
-                }
-            });
-        },
-        { threshold: 0.08 }
-    );
+    const revealObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            entry.isIntersecting
+                ? entry.target.classList.add('in-view')
+                : entry.target.classList.remove('in-view');
+        });
+    }, { threshold: 0.08 });
     elems.forEach(el => revealObserver.observe(el));
 
     // Nav hide/show on scroll
     let lastScroll = window.pageYOffset || document.documentElement.scrollTop;
     const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+        if (currentScroll > lastScroll) {
+            nav.classList.add('hidden'); // scrolling down → hide
+        } else {
+            nav.classList.remove('hidden'); // scrolling up → show
+        }
+        lastScroll = currentScroll <= 0 ? 0 : currentScroll;
+    }, { passive: true });
 
-    window.addEventListener(
-        'scroll',
-        () => {
-            const currentScroll =
-                window.pageYOffset || document.documentElement.scrollTop;
-
-            if (currentScroll > lastScroll) {
-                // scrolled down
-                nav.classList.add('hidden');
-            } else {
-                // scrolled up
-                nav.classList.remove('hidden');
-            }
-
-            lastScroll = currentScroll <= 0 ? 0 : currentScroll;
-        },
-        { passive: true }
-    );
-
-        // Mobile menu toggle
+    // Mobile menu toggle
     const menuToggle = document.getElementById("menu-toggle");
     const navLinks = document.getElementById("nav-links");
-
     menuToggle.addEventListener("click", () => {
         navLinks.classList.toggle("show");
     });
 
+    // Vanta.js background with adaptive settings
+    const isMobile = window.innerWidth <= 768;
+
     VANTA.NET({
         el: "#particles-js",
-        mouseControls: true,
-        touchControls: true,
+        mouseControls: !isMobile,
+        touchControls: !isMobile,
         minHeight: 200.00,
         minWidth: 200.00,
         scale: 1.00,
         scaleMobile: 1.00,
         color: 0x00f7ff,
         backgroundColor: 0x000328,
-        points: 15.00,
-        maxDistance: 20.00,
+        // adjust complexity for mobile
+        points: isMobile ? 10.00 : 15.00,
+        maxDistance: isMobile ? 15.00 : 20.00,
         spacing: 17.00
     });
 });
