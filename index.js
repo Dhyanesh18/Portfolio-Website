@@ -46,8 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     VANTA.NET({
         el: "#particles-js",
-        mouseControls: !isMobile,
-        touchControls: !isMobile,
+        mouseControls: true,
+        touchControls: true,
         minHeight: 200.00,
         minWidth: 200.00,
         scale: 1.00,
