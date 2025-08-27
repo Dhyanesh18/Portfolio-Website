@@ -1,27 +1,51 @@
-# Portfolio Showcase Web Application
+# Dhyaneshvar K Portfolio
+
+Welcome to my personal portfolio! This web application showcases my projects, skills, certifications, and ways to get in touch. Built with modern web technologies, it is responsive, interactive, and visually appealing.
 
 ## Features
-- **Responsive Design**: The application is built with media queries (`@media`) to ensure that the layout adapts to different screen sizes.
-- **Dynamic Visuals**: Incorporates Particles.js for engaging background effects.
-- **Iconography**: Uses Font Awesome for scalable vector icons.
+
+* **Responsive Design** – Optimized for desktops, tablets, and mobile devices.
+* **Dynamic Background** – Uses Vanta.js for interactive particle effects.
+* **Interactive Navigation** – Smooth scrolling and mobile-friendly menu.
+* **Project Showcase** – Detailed descriptions with tech stacks for each project.
+* **Skills & Certifications** – Highlights technical expertise and achievements.
+* **Contact Section** – Quick links to GitHub, LinkedIn, and email.
 
 ## Technologies Used
-- **HTML5**
-- **CSS3**
-- **JavaScript**
-- **Libraries**:
-  - Particles.js
-  - Font Awesome
+
+* **HTML5 & CSS3** – Structuring and styling the website.
+* **JavaScript** – DOM manipulation, animations, and interactive effects.
+* **Libraries & Frameworks**:
+
+  * [Vanta.js](https://www.vantajs.com/) – Animated particle backgrounds.
+  * [Three.js](https://threejs.org/) – WebGL library for 3D graphics.
+  * [Font Awesome](https://fontawesome.com/) – Icons for navigation and social links.
 
 ## Installation
-1. Clone this repository.
-2. Open `index.html` in your web browser.
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/Dhyanesh18/portfolio.git
+   ```
+2. Open `index.html` in your preferred web browser.
 
 ## Usage
-Simply navigate through the application to view my portfolio projects, skills, and contact information.
+
+Navigate through the website to explore:
+
+* **About Me** – Learn about my academic background and interests.
+* **Projects** – Browse detailed portfolio projects with tech stacks.
+* **Skills & Certifications** – See my technical expertise and achievements.
+* **Contact** – Connect with me via GitHub, LinkedIn, or email.
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
-- Thanks to the developers of Particles.js and Font Awesome for their amazing tools.
+
+* Special thanks to the creators of [Vanta.js](https://www.vantajs.com/) and [Font Awesome](https://fontawesome.com/) for their amazing tools.
+* Inspired by modern portfolio web design trends for developers and AI/ML enthusiasts.
+
+---
