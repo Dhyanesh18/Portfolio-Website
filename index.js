@@ -41,6 +41,34 @@ document.addEventListener('DOMContentLoaded', () => {
         navLinks.classList.toggle("show");
     });
 
+    const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('animate-in');
+                    }, index * 200);
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '50px'
+        });
+
+        document.querySelectorAll('.skill-category').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Add interactive hover effects
+        document.querySelectorAll('.skill-tag').forEach(tag => {
+            tag.addEventListener('mouseenter', () => {
+                tag.style.transform = 'translateY(-2px) scale(1.05)';
+            });
+            
+            tag.addEventListener('mouseleave', () => {
+                tag.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
     // Vanta.js background with adaptive settings
     const isMobile = window.innerWidth <= 768;
 
