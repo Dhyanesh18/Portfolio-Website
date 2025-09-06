@@ -113,6 +113,12 @@ nav {
     transition: top 0.3s ease-in-out;
 }
 
+#nav-links i {
+    margin-right: 8px;
+}
+
+
+
 nav.hidden {
     top: -200px;
 }
@@ -636,6 +642,7 @@ p {
             display: flex;
             align-items: center;
             margin-bottom: 1.5rem;
+            gap: 8px;
         }
 
         .category-icon {
@@ -652,6 +659,10 @@ p {
         }
 
         .category-title {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
             font-size: 1.3rem;
             font-weight: 600;
             color: white;
